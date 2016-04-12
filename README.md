@@ -1,5 +1,9 @@
 
-                       Aerial v. 0.14.0.9  - Thu 09 Oct 2014
+                       Aerial v. 0.14.0.9 - REVISED  - April 2016
+
+UPDATE:
+=======
+I've made Aerial compatible with the latest version of Kali (Kali-Rolling).
 
 What is it ?
 =======

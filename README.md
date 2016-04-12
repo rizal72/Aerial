@@ -3,7 +3,7 @@
 
 UPDATE:
 =======
-I've made Aerial compatible with the latest version of Kali (Kali-Rolling).
+I've made Aerial compatible with the latest version of Kali Linux (4.4).
 
 What is it ?
 =======
